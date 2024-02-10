@@ -30,7 +30,7 @@ export default function Navbar() {
           <NavLink className="nav-link" to={"/categories"}>Categories</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" to={"/brands"}>Beands</NavLink>
+          <NavLink className="nav-link" to={"/brands"}>Brands</NavLink>
         </li>
      
       </ul>
