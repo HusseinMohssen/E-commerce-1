@@ -54,7 +54,7 @@ export default function Product({ item }) {
           >
             {btnLoading ? 'Add To Cart' : 'loading...'}
           </button>
-          <hr />
+          <br />
           <button
             onClick={() => addProductToWishList(item._id)}
             className="btn bg-warning w-100 text-white"
