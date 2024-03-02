@@ -18,6 +18,9 @@ import ProductDetails from './components/ProductDetails/ProductDetails'
 import StoreContextProvider from './context/storeContext'
 import { ToastContainer } from 'react-toastify';
 import Address from './components/Address/Address'
+import ForgotPassword from './components/ForgotPassword/ForgotPassword'
+import VerfiyCode from './components/VerfiyCode/VerfiyCode'
+import ResetPassword from './components/ResetPassword/ResetPassword'
 
 
 export default function App() {
@@ -40,6 +43,9 @@ export default function App() {
       path: '/', element: <AuthLayout />, children: [
         { path: 'signin', element: <Signin /> },
         { path: 'signup', element: <Signup /> },
+        { path: 'forgotPassword', element: <ForgotPassword /> },
+        { path: 'verfiyCode', element: <VerfiyCode /> },
+        { path: 'resetPassword', element: <ResetPassword /> },
       ]
     }
   ])

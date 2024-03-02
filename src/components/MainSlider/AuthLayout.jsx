@@ -30,6 +30,11 @@ export default function AuthLayout() {
             SignIn
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink className="nav-link position-relative mx-5" to={"/forgotPassword"}>
+          forgotPassword
+          </NavLink>
+        </li>
 
       </ul>
     </div>
