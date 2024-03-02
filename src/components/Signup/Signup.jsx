@@ -1,28 +1,39 @@
+import axios from 'axios';
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 export default function Signup() {
 
-    function validate(values){
+    let navigate = useNavigate()
+    const [errMsg,setErrMsg]= useState('')
+    const [loading,setLoading]= useState(true)
 
-        const myError = {};
-
-        if(!values.name){
-            myError.name = 'name is required.'
-        }
-        if(!values.email){
-            myError.email = 'email is required.'
-        }
-        if(!/^[A-Z][a-zA-Z0-9@]{6,}$/.test(values.password)){
-            myError.password = 'passowrd must be 7 charcters or more and start with a capital letter.'
-        }
-        if(values.rePassword !== values.password || values.rePassword === ''){
-            myError.rePassword = 'passowrd and rePassword not match.'
-        }
-
-        return myError
+    function sendData(values){
+        setLoading(false)
+        axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup', values)
+        .then(({data}) => {
+            if(data.message==='success'){
+                navigate('/signin')
+            }
+        }).catch((err) =>{
+            setErrMsg(err.response.data.message)
+            setLoading(true)
+        })
+        
     }
 
+    function validationSchema(){
+        
+        let schema = new Yup.object({
+            name: Yup.string().min(3).max(25).required(),
+            email: Yup.string().email().required(),
+            password: Yup.string().matches(/^[A-Z][A-Za-z0-9@]{6,}$/).required(),
+            rePassword: Yup.string().oneOf([Yup.ref('password')]).required(),
+        })
+        return schema
+    }
 
     let register=useFormik({
         initialValues:{
@@ -31,12 +42,13 @@ export default function Signup() {
             password:"",
             rePassword:"",
         },
-        validate,
+        validationSchema,
         onSubmit:(values)=>{
-            console.log(values);
+
+            sendData(values)
         }
     })
-    console.log(register.errors);
+
     return (
     <div>
         <div className="w-75 m-auto my-5">
@@ -63,7 +75,10 @@ export default function Signup() {
 
                 {register.errors.rePassword && register.touched.rePassword ?<div className="alert alert-danger">{register.errors.rePassword}</div>:''}
 
-                <button type='submit' className='btn bg-main text-white'>SignUp</button>
+                {errMsg ?<div className="alert alert-danger">{errMsg}</div>:''}
+                <button disabled={!(register.dirty&&register.isValid)} type='submit' className='btn bg-main text-white'>
+                    {loading ? 'SignUp':'loading...'}
+                </button>
             </form>
         </div>
     </div>

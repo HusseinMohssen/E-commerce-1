@@ -64,3 +64,6 @@ a , a:hover{
     color: var(--main-color);
     font-weight: bolder;
 }
+.brdr {
+    border: 1px solid var(--main-color);
+}
